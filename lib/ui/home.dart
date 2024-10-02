@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import '../services/news_service.dart';
 import '../models/news_article.dart';
 import 'news_detail.dart';
+// Para formatear la fecha
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _HomeScreenState createState() => _HomeScreenState();
 }
 
@@ -45,14 +49,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 margin: const EdgeInsets.all(10),
                 child: Column(
                   children: [
-                    Image.network(
-                      article.imageUrl,
-                      fit: BoxFit.cover,
-                      height: 200,
-                      width: double.infinity,
-                      errorBuilder: (context, error, stackTrace) =>
-                          const Icon(Icons.broken_image),
-                    ),
+                    if (article.imageUrl != null)
+                      Image.network(
+                        article.imageUrl!,
+                        fit: BoxFit.cover,
+                        height: 200,
+                        width: double.infinity,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Icon(Icons.broken_image),
+                      ),
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
@@ -65,8 +70,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                          if (article.author != null)
+                            Text(
+                              'Author: ${article.author}',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black54,
+                              ),
+                            ),
                           const SizedBox(height: 8),
-                          
+                          Text(
+                            article.description,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black54,
+                            ),
+                          ),
                         ],
                       ),
                     ),
