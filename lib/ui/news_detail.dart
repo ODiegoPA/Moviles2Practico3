@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
-import '../models/news_article.dart';
+import 'package:url_launcher/url_launcher.dart'; 
 import 'package:intl/intl.dart';
+import '../models/news_article.dart';
 
 class NewsDetailScreen extends StatelessWidget {
   final NewsArticle article;
 
   const NewsDetailScreen({super.key, required this.article});
+
+  
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri.parse(url); 
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +60,23 @@ class NewsDetailScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               article.description,
-              style: const TextStyle(fontSize: 18), // Aumentar tamaño del texto
+              style: const TextStyle(fontSize: 18),
             ),
             const SizedBox(height: 20),
+            
+            GestureDetector(
+              onTap: () {
+                _launchURL(article.url);
+              },
+              child: const Text(
+                'Leer Articulo CompletoQ',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
           ],
         ),
       ),

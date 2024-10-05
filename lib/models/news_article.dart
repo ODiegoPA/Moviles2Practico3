@@ -2,7 +2,7 @@ class NewsArticle {
   final String title;
   final String description;
   final String url;
-  final String? imageUrl; // Este campo es opcional
+  final String? imageUrl; 
   final String? author;
   final String? sourceName;
   final DateTime? publishedAt;
